@@ -23,14 +23,25 @@
 ```bash
 # Python 3.12, uv 사용
 uv venv
-uv pip install -r requirements.txt
+.venv\Scripts\activate        # Windows
+# source .venv/bin/activate   # macOS/Linux
+
+# torch/torchvision이 CUDA 12.4 빌드(+cu124)로 고정돼 있어 PyPI 기본 인덱스엔 없음 —
+# PyTorch 인덱스를 추가로 지정해야 설치된다.
+uv pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu124
 ```
+- CUDA 12.4가 아니거나 GPU가 없다면, `requirements.txt`의 `torch==2.6.0+cu124` /
+  `torchvision==0.21.0+cu124` 두 줄을 본인 환경에 맞는 버전(예: CPU 전용이면 `+cu124` 접미사를 뗀
+  버전)으로 바꾼 뒤 설치해야 합니다.
 - rembg(U2-Net) 모델은 최초 실행 시 자동 다운로드됩니다(약 176MB, `~/.rembg/models/`에 캐시).
 - `runwayml/stable-diffusion-inpainting` 모델은 최초 실행 시 Hugging Face 캐시에 자동 다운로드됩니다(fp16, 약 4GB).
 - GPU(CUDA) 권장 — 이 프로젝트는 RTX 3060(12GB)에서 검증했습니다. GPU가 없으면 CPU로도 동작하지만 매우 느립니다.
 
 ## 사용법
 ```bash
+# 0) data/raw/에 본인이 촬영한 상품 사진을 넣는다.
+#    저장소에는 예시 이미지가 포함돼 있지 않으므로(용량 문제로 .gitignore 처리) 직접 채워야 한다.
+
 # 1) 분할: 마스크 오버레이 확인용 (data/output/masks/에 저장)
 python -m src.segment
 
@@ -40,7 +51,8 @@ python -m src.inpaint
 # 3) Gradio 데모: 사진 한 장을 업로드해 바로 결과 확인
 python app.py
 ```
-`app.py` 실행 후 터미널에 뜨는 로컬 주소(기본 http://127.0.0.1:7860) 로 접속하면 됩니다.
+`data/raw/`가 비어있으면 1), 2)단계는 에러 없이 "0장 대상"으로 조용히 끝나니, 사진이 실제로 들어있는지
+먼저 확인하세요. `app.py` 실행 후 터미널에 뜨는 로컬 주소(기본 http://127.0.0.1:7860) 로 접속하면 됩니다.
 
 ## 실행 결과
 
