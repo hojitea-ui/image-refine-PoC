@@ -82,6 +82,4 @@ python app.py
 20장 전체에 대한 성공/실패 분류, 원인 분석, 수작업 대비 처리 시간 비교는
 [`docs/RESULTS.md`](docs/RESULTS.md)에 정리했다.
 
-## 라이선스
-이 저장소의 코드는 [MIT License](LICENSE)를 따른다. 사용한 모델(rembg, Stable Diffusion inpainting)의
-라이선스는 [`docs/MODEL_SELECTION.md`](docs/MODEL_SELECTION.md) 참고.
+사용한 모델(rembg, Stable Diffusion inpainting)의 라이선스는 [`docs/MODEL_SELECTION.md`](docs/MODEL_SELECTION.md) 참고.
