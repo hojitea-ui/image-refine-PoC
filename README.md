@@ -35,7 +35,18 @@ uv pip install -r requirements.txt --extra-index-url https://download.pytorch.or
   버전)으로 바꾼 뒤 설치해야 합니다.
 - rembg(U2-Net) 모델은 최초 실행 시 자동 다운로드됩니다(약 176MB, `~/.rembg/models/`에 캐시).
 - `runwayml/stable-diffusion-inpainting` 모델은 최초 실행 시 Hugging Face 캐시에 자동 다운로드됩니다(fp16, 약 4GB).
-- GPU(CUDA) 권장 — 이 프로젝트는 RTX 3060(12GB)에서 검증했습니다. GPU가 없으면 CPU로도 동작하지만 매우 느립니다.
+- GPU(CUDA) 권장 — GPU가 없으면 CPU로도 동작하지만 매우 느립니다.
+
+### 검증 환경 (참고용 PC 사양)
+| 항목 | 사양 |
+|---|---|
+| 제조사 | ASUS |
+| OS | Windows 10 Home 64비트 (Build 19045) |
+| CPU | Intel Core i7-10700 @ 2.90GHz (8코어 16스레드) |
+| RAM | 32GB (16GB × 2, Samsung, 2666MHz) |
+| GPU | NVIDIA GeForce RTX 3060 (VRAM 4GB로 표시되나 실제는 더 클 가능성 있음) |
+| 저장장치 1 | WD My Passport (외장 HDD) ~466GB |
+| 저장장치 2 | Crucial CT500P5SSD8 (SSD) ~466GB |
 
 ## 사용법
 ```bash
@@ -70,3 +81,7 @@ python app.py
 ## 개선 효과 검증 결과
 20장 전체에 대한 성공/실패 분류, 원인 분석, 수작업 대비 처리 시간 비교는
 [`docs/RESULTS.md`](docs/RESULTS.md)에 정리했다.
+
+## 라이선스
+이 저장소의 코드는 [MIT License](LICENSE)를 따른다. 사용한 모델(rembg, Stable Diffusion inpainting)의
+라이선스는 [`docs/MODEL_SELECTION.md`](docs/MODEL_SELECTION.md) 참고.

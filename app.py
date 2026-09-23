@@ -1,4 +1,4 @@
-"""효도 용돈박스 상품 사진 배경/조명 정제 데모.
+"""자가 촬영 상품 사진 배경/조명 정제 데모.
 
 사진을 업로드하면 rembg로 상품을 분할하고, Diffusion inpainting으로
 배경을 깨끗한 스튜디오 배경으로 교체한 결과를 보여준다.
@@ -74,7 +74,7 @@ demo = gr.Interface(
         gr.Image(type="pil", label="rembg 분할 마스크"),
         gr.Image(type="pil", label="배경 정제 결과"),
     ],
-    title="효도 용돈박스 상품 사진 배경/조명 정제",
+    title="자가 촬영 상품 사진 배경/조명 정제",
     description=(
         "직접 촬영한 상품 사진에서 rembg로 상품 영역을 분할하고, "
         "Diffusion inpainting으로 배경을 깨끗한 스튜디오 배경으로 교체합니다."
