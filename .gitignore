@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+weights/*.pt
+data/raw/*
+data/output/*
+!data/raw/.gitkeep
+!data/output/.gitkeep
+.omc/
