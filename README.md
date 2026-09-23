@@ -6,6 +6,7 @@
 - **문제 정의서**: [`docs/PROBLEM_DEFINITION.md`](docs/PROBLEM_DEFINITION.md) (도메인, 현재의 문제, 개선 가설, 대상 사용자, 성공 기준)
 - **PoC 코드**: [`src/mask.py`](src/mask.py), [`src/segment.py`](src/segment.py), [`src/inpaint.py`](src/inpaint.py), [`app.py`](app.py) — 모델 선정 근거는 [`docs/MODEL_SELECTION.md`](docs/MODEL_SELECTION.md) 참고
 - **개선 효과 검증 결과**: [`docs/RESULTS.md`](docs/RESULTS.md) (기존 수작업과의 비교, 실패 사례 포함)
+- **회고**: [`docs/RETROSPECTIVE.md`](docs/RETROSPECTIVE.md) (모델 선정 과정, 성공 기준 설정, 라이선스 이슈에 대한 회고)
 - **README**(이 문서): 실행 방법 + 아래 [실행 결과](#실행-결과)의 시연 자료
 
 ## 문제
