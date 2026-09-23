@@ -1,54 +1,46 @@
-"""data/raw 이미지를 YOLOv8-seg로 분할해 마스크 오버레이를 확인한다.
+"""data/raw 이미지를 rembg(U2-Net)로 분할해 마스크 오버레이를 확인한다.
 
 사용법:
-    python src/segment.py
+    python -m src.segment
 """
 
 from pathlib import Path
 
-import torch
-from ultralytics import YOLO
+import cv2
+import numpy as np
+
+from src.mask import get_product_mask
 
 RAW_DIR = Path("data/raw")
 OUTPUT_DIR = Path("data/output/masks")
-WEIGHTS = Path("weights/yolov8n-seg.pt")
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png"}
 
 
+def overlay_mask(image_bgr: np.ndarray, mask: np.ndarray) -> np.ndarray:
+    green = np.zeros_like(image_bgr)
+    green[..., 1] = 255
+    alpha = ((mask > 0).astype(np.float32) * 0.4)[..., None]
+    blended = image_bgr.astype(np.float32) * (1 - alpha) + green.astype(np.float32) * alpha
+    return blended.astype(np.uint8)
+
+
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
-    model = YOLO(str(WEIGHTS))
     image_paths = sorted(p for p in RAW_DIR.iterdir() if p.suffix.lower() in IMAGE_EXTS)
+    print(f"{len(image_paths)}장 처리 시작")
 
-    device = 0 if torch.cuda.is_available() else "cpu"
-    print(f"{len(image_paths)}장 처리 시작 (device: {device})")
-
-    no_mask = []
     for path in image_paths:
-        result = model.predict(source=str(path), device=device, verbose=False)[0]
+        image_bgr = cv2.imread(str(path))
+        mask = get_product_mask(image_bgr)
+        area_ratio = (mask > 0).sum() / mask.size
+        print(f"{path.name}: 상품 영역 비율 {area_ratio:.1%}")
 
-        if result.masks is None:
-            no_mask.append(path.name)
-            print(f"[분할 실패] {path.name}: 마스크 없음")
-            continue
-
-        areas = result.masks.data.sum(dim=(1, 2))
-        top = areas.argmax().item()
-        cls_name = result.names[int(result.boxes.cls[top])]
-        conf = result.boxes.conf[top].item()
-        print(f"{path.name}: {len(result.masks)}개 객체, 최상위={cls_name} ({conf:.2f})")
-
-        overlay = result.plot()
+        overlay = overlay_mask(image_bgr, mask)
         out_path = OUTPUT_DIR / f"{path.stem}_mask.jpg"
-        import cv2
-
         cv2.imwrite(str(out_path), overlay)
 
-    print(f"\n완료: {len(image_paths) - len(no_mask)}/{len(image_paths)} 성공, 결과는 {OUTPUT_DIR}/ 에 저장")
-    if no_mask:
-        print(f"마스크 없음: {no_mask}")
+    print(f"\n완료: {len(image_paths)}장, 결과는 {OUTPUT_DIR}/ 에 저장")
 
 
 if __name__ == "__main__":
