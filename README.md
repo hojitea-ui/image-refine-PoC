@@ -71,6 +71,11 @@ python app.py
 
 ![Gradio 데모 실행 결과](docs/screenshots/gradio_demo_result.jpg)
 
+이 스크린샷과 같은 입력 사진(02_sheep_shelf)은 배치 평가에서는 오생성(원본에 없던 물체가 배경에
+새로 생성됨)으로 재분류됐다 — 자세한 내용은 [`docs/RESULTS.md`](docs/RESULTS.md)의 결과표 02번 참고.
+diffusion inpainting은 시드를 고정하지 않아 실행할 때마다 결과가 달라질 수 있어서, 이 스크린샷 자체가
+그 결함을 담고 있는지는 확인하지 못했다.
+
 수작업(클립스튜디오) vs AI 결과 비교 등 더 많은 사례는 [`docs/RESULTS.md`](docs/RESULTS.md)에서 볼 수 있다:
 
 ![수작업 vs AI 3자 비교](docs/comparisons/toothpick_3way_compare.jpg)
